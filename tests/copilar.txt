@@ -1,0 +1,1 @@
+g++ C:\Users\eduar\OneDrive - FTEC FACULDADES\Algoritmos\projeto_clinica\tests\test_estoque.cpp C:\Users\eduar\OneDrive - FTEC FACULDADES\Algoritmos\projeto_clinica\src\estoque.cpp C:\Users\eduar\OneDrive - FTEC FACULDADES\Algoritmos\projeto_clinica\src\medicamentos.cpp -o C:\Users\eduar\OneDrive - FTEC FACULDADES\Algoritmos\projeto_clinica\tests\output\test_estoque.exe
