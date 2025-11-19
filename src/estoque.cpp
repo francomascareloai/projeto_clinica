@@ -38,5 +38,7 @@ void cadastrarMedicamento(Medicamento estoque[], int *totalMedicamentos) {
     (*totalMedicamentos)++;             // incrementa
 
     printf("\nMedicamento cadastrado com sucesso!\n");
+
+    printf("Hello world\n");
 }
 
