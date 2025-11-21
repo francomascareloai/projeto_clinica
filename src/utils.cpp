@@ -13,3 +13,4 @@ void vazioPorEnquanto(Medicamento lista[], int total) {
         return;
     }
 }
+

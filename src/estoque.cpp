@@ -3,8 +3,20 @@
 #include <stdio.h>
 #include "../include/estoque.hpp"
 #include "../include/utils.hpp"
+// Criar diretório portable (Windows / POSIX)
+#ifdef _WIN32
+# include <direct.h>
+# define MKDIR(path) _mkdir(path)
+#else
+# include <sys/stat.h>
+# include <sys/types.h>
+# define MKDIR(path) mkdir(path, 0755)
+#endif
 
 void cadastrarMedicamento(Medicamento lista[], int *total) {
+    // Puxar informações do CSV para lista (se necessário)
+    importarInventario(lista, total);
+    
     printf("\n========================================\n");
     printf("\nCadastro de Medicamento\n");
     
@@ -62,9 +74,14 @@ void cadastrarMedicamento(Medicamento lista[], int *total) {
     
     printf("\nMedicamento cadastrado com sucesso!\n");
     printf("\n========================================\n");
+
+    exportarInventario(lista, *total);
 }
 
 void listarMedicamentos(Medicamento lista[], int total) {
+    // Puxar informações do CSV para lista (se necessário)
+    importarInventario(lista, &total);
+    
     // Retorno Vazio por enquanto
     vazioPorEnquanto(lista, total);
 
@@ -83,10 +100,85 @@ void listarMedicamentos(Medicamento lista[], int total) {
 }
 
 void emitirAlertas(Medicamento lista[], int total) {
-    // Implementação futura
+    // Puxar informações do CSV para lista (se necessário)
+    importarInventario(lista, &total);
+    
+    // Retorno vazio por enquanto
+    vazioPorEnquanto(lista, total);
+
+    // Lê a data atual
+    int diaAtual, mesAtual, anoAtual;
+    printf("\nDigite a data atual (DD MM AAAA): ");
+    scanf("%d %d %d", &diaAtual, &mesAtual, &anoAtual);
+    limparBuffer();
+
+    // Verifica e exibe os medicamentos com estoque abaixo do mínimo
+    printf("\n========================================\n");
+    printf("\nAlertas de Medicamentos com Estoque Abaixo do Mínimo:\n");
+    
+    bool encontrouAlerta = false;
+    for (int i = 0; i < total; i++) {
+        if (lista[i].quantidade < lista[i].quantidadeMinima) {
+            printf("\nID: %d\n", lista[i].id);
+            printf("Nome: %s\n", lista[i].nome);
+            printf("Quantidade: %d\n", lista[i].quantidade);
+            printf("Quantidade Mínima: %d\n", lista[i].quantidadeMinima);
+            printf("Data de Validade: %02d/%02d/%04d\n", lista[i].dia, lista[i].mes, lista[i].ano);
+            encontrouAlerta = true;
+        }
+    }
+    if (!encontrouAlerta) {
+        printf("\nNenhum medicamento com estoque abaixo do mínimo.\n");
+    }
+    printf("\n========================================\n");
+
+    // Verifica e exibe os medicamentos com validade próxima (dentro de 30 dias)
+    printf("\nAlertas de Medicamentos com Validade Próxima (dentro de 30 dias):\n");
+    encontrouAlerta = false;
+    for (int i = 0; i < total; i++) {
+        // Simulação de verificação de validade próxima
+        if (lista[i].ano == anoAtual && lista[i].mes == mesAtual) { 
+            printf("\nID: %d\n", lista[i].id);
+            printf("Nome: %s\n", lista[i].nome);
+            printf("Quantidade: %d\n", lista[i].quantidade);
+            printf("Quantidade Mínima: %d\n", lista[i].quantidadeMinima);
+            printf("Data de Validade: %02d/%02d/%04d\n", lista[i].dia, lista[i].mes, lista[i].ano);
+            encontrouAlerta = true;
+        }
+    }
+    if (!encontrouAlerta) {
+        printf("\nNenhum medicamento com validade próxima.\n");
+    }
+    printf("\n========================================\n");
+
+    // Verifica e exibe os medicamentos vencidos
+    printf("\nAlertas de Medicamentos Vencidos:\n");
+    encontrouAlerta = false;
+    for (int i = 0; i < total; i++) {
+        // Simulação de verificação de medicamentos vencidos
+        if (lista[i].ano < anoAtual || 
+           (lista[i].ano == anoAtual && lista[i].mes < mesAtual) || 
+           (lista[i].ano == anoAtual && lista[i].mes == mesAtual && lista[i].dia < diaAtual)) {
+            printf("\nID: %d\n", lista[i].id);
+            printf("Nome: %s\n", lista[i].nome);
+            printf("Quantidade: %d\n", lista[i].quantidade);
+            printf("Quantidade Mínima: %d\n", lista[i].quantidadeMinima);
+            printf("Data de Validade: %02d/%02d/%04d\n", lista[i].dia, lista[i].mes, lista[i].ano);
+            encontrouAlerta = true;
+        }
+    }
+    if (!encontrouAlerta) {
+        printf("\nNenhum medicamento vencido.\n");
+    }
+    printf("\n========================================\n");
+
+    // Fim dos alertas
 }
 
 void mostrarEstatisticas(Medicamento lista[], int total) {
+    // Puxar informações do CSV para lista (se necessário)
+    importarInventario(lista, &total);
+    
     // Retorno vazio por enquanto
     vazioPorEnquanto(lista, total);
 
@@ -136,6 +228,9 @@ void mostrarEstatisticas(Medicamento lista[], int total) {
 }
 
 void simularVenda(Medicamento lista[], int total) {
+    // Puxar informações do CSV para lista (se necessário)
+    importarInventario(lista, &total);
+    
     printf("\n========================================\n");
     printf("\nSimulação de Venda de Medicamento\n");
     
@@ -179,8 +274,77 @@ void simularVenda(Medicamento lista[], int total) {
         printf("\nAlerta!!! O estoque do medicamento %s está abaixo do mínimo!\n", lista[indiceVenda].nome);
     }
     printf("\n========================================\n");
+
+    // Exporta o inventário atualizado
+    exportarInventario(lista, total);
 }
 
 void exportarInventario(Medicamento lista[], int total) {
-    // Implementação futura
+    // Exportação para arquivo CSV (salva em ../data)
+    MKDIR("..\\data");  
+    const char *caminho = "..\\data\\inventario_medicamentos.csv";
+    FILE *arquivo = fopen(caminho, "w");
+    
+    // Verifica se o arquivo foi aberto corretamente
+    if (arquivo == NULL) {
+        printf("\nErro ao criar o arquivo de inventário.\n");
+        return;
+    }
+
+    // Cabeçalho do arquivo CSV
+    fprintf(arquivo, "ID;Nome;Quantidade;QuantidadeMinima;DataValidade\n");
+
+    // Escrita dos dados dos medicamentos no arquivo
+    for (int i = 0; i < total; i++) {
+        fprintf(arquivo, "%d;%s;%d;%d;%02d/%02d/%04d\n", 
+                lista[i].id, 
+                lista[i].nome, 
+                lista[i].quantidade, 
+                lista[i].quantidadeMinima, 
+                lista[i].dia, 
+                lista[i].mes, 
+                lista[i].ano);
+    }
+    fclose(arquivo);
+    printf("\nInventário exportado com sucesso para '%s'!\n", caminho);
+    printf("\n========================================\n");
+}
+
+void importarInventario(Medicamento lista[], int *total) {
+    // Retorno vazio por enquanto
+    vazioPorEnquanto(lista, *total);
+    
+    // Carregamento do arquivo CSV (se existir)
+    FILE *arquivo = fopen("inventario_medicamentos.csv", "r");
+    if (arquivo == NULL) {
+        // Arquivo não existe, nada a carregar
+        printf("\nNenhum inventário encontrado para carregar.\n");
+        return;
+    }
+
+    char linha[200];
+    // Ignora o cabeçalho
+    fgets(linha, sizeof(linha), arquivo);
+    *total = 0;
+    // Lê cada linha do arquivo
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        Medicamento med;
+        // Parse da linha lida
+        sscanf(linha, "%d;%49[^;];%d;%d;%d/%d/%d", 
+               &med.id, 
+               med.nome, 
+               &med.quantidade, 
+               &med.quantidadeMinima, 
+               &med.dia, 
+               &med.mes, 
+               &med.ano);
+        // Adiciona o medicamento à lista
+        lista[*total] = med;
+        (*total)++;
+    }
+
+    fclose(arquivo);
+
+    printf("\nInventário carregado com sucesso!\n");
+    printf("\n========================================\n"); 
 }
