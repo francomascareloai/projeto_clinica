@@ -31,10 +31,10 @@ void cadastrarMedicamento(Medicamento lista[], int *total) {
         printf("\nDigite a quantidade do medicamento: ");
         scanf("%d", &lista[*total].quantidade);
         limparBuffer();
-        if (lista[*total].quantidade < 0) {
+        if (lista[*total].quantidade <= 0) {
             printf("\nQuantidade inválida. Por favor, tente novamente.");
         }
-    } while (lista[*total].quantidade < 0); // Garante que a quantidade não seja negativa
+    } while (lista[*total].quantidade <= 0); // Garante que a quantidade não seja negativa
  
     // Quantidade mínima do medicamento
     do {
