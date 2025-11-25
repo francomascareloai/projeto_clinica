@@ -49,12 +49,17 @@ void cadastrarMedicamento(Medicamento lista[], int *total) {
     // Data de validade do medicamento
     do {
     printf("\nDigite a data de validade do medicamento (DD MM AAAA): ");
+    printf("\nExemplo: 25 11 2025 (separe dia, mês e ano com ESPAÇOS): ");
     scanf("%d %d %d", &lista[*total].dia, &lista[*total].mes, &lista[*total].ano);
     limparBuffer();
     if (lista[*total].dia < 1 || lista[*total].dia > 31 || 
         lista[*total].mes < 1 || lista[*total].mes > 12 || 
         lista[*total].ano < 2024) {
-        printf("\nData de validade inválida. Por favor, tente novamente.");
+        printf("\n*** ERRO: Data inválida! ***");
+        printf("\n    - Dia deve estar entre 01 e 31");
+        printf("\n    - Mês deve estar entre 01 e 12");
+        printf("\n    - Ano deve ser maior ou igual a 2024");
+        printf("\n    - NÃO esqueça dos ESPAÇOS entre os números!\n");
     }
     } while (lista[*total].dia < 1 || lista[*total].dia > 31 || 
              lista[*total].mes < 1 || lista[*total].mes > 12 || 
@@ -212,7 +217,7 @@ void mostrarEstatisticas(Medicamento lista[], int total) {
     printf("\nTotal de medicamentos cadastrados: %d\n", total);
     printf("Quantidade total em estoque: %d\n", somaEstoque);
     printf("Quantidade média em estoque: %.2f\n", mediaEstoque);
-    printf("Medicamentos abaixo do estoque minimo: %d\n", medicamentosAbaixoMinimo);
+    printf("Medicamentos abaixo do estoque mínimo: %d\n", medicamentosAbaixoMinimo);
     printf("Medicamento com maior estoque: %s (Quantidade: %d)\n", lista[indiceMaior].nome, maiorEstoque);
     printf("Medicamento com menor estoque: %s (Quantidade: %d)\n", lista[indiceMenor].nome, menorEstoque);
     printf("\n========================================\n");

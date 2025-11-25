@@ -1,6 +1,8 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
+#include "estoque.hpp"  // Necessario para usar o tipo Medicamento
+
 void limparBuffer();
 void vazioPorEnquanto(Medicamento lista[], int total);
 
