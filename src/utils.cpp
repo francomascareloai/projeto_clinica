@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include "../include/utils.hpp"
 #include "../include/estoque.hpp"
 

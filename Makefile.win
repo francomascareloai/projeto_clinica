@@ -4,10 +4,10 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = src/estoque.o src/main.o src/utils.o
-LINKOBJ  = src/estoque.o src/main.o src/utils.o
+OBJ      = src/estoque.o src/main.o src/utils.o src/dosagem.o
+LINKOBJ  = src/estoque.o src/main.o src/utils.o src/dosagem.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
-INCS     = -I"C:/Users/Admin/Documents/Uniftec/Algoritmos e Programacao/projeto_clinica/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
 BIN      = clinica.exe
 CXXFLAGS = $(CXXINCS) 
@@ -32,3 +32,6 @@ src/main.o: src/main.cpp
 
 src/utils.o: src/utils.cpp
 	$(CPP) -c src/utils.cpp -o src/utils.o $(CXXFLAGS)
+
+src/dosagem.o: src/dosagem.cpp
+	$(CPP) -c src/dosagem.cpp -o src/dosagem.o $(CXXFLAGS)

@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <math.h> 
 #include <ctype.h>
 
@@ -17,7 +17,7 @@ void calcularDoseMedicamento() {
           printf("\nQual a idade do paciente em meses?\n");
           scanf("%d", &idade);
           if (idade < 0 || idade > 1440) {
-              printf("Digite uma idade válida!!\n");
+              printf("Digite uma idade valida!!\n");
           }
       } while (idade < 0 || idade > 1440);
 
@@ -31,7 +31,7 @@ void calcularDoseMedicamento() {
           } else if (genero == 'F') {
               printf("Gênero: Feminino\n");
           } else {
-              printf("Opção inválida!!\n");
+              printf("Opcao invalida!!\n");
           }
       } while (genero != 'M' && genero != 'F'); 
 
@@ -39,7 +39,7 @@ void calcularDoseMedicamento() {
           printf("Paciente apresenta sintomas? (S/N)\n");
           scanf(" %c", &sinto);
           if (sinto != 'S' && sinto != 's' && sinto != 'N' && sinto != 'n') {
-              printf("Opção inválida! Digite S para sim ou N para não.\n");
+              printf("Opcao invalida! Digite S para sim ou N para nao.\n");
           }
       } while (sinto != 'S' && sinto != 's' && sinto != 'N' && sinto != 'n');
 
@@ -47,7 +47,7 @@ void calcularDoseMedicamento() {
           printf("Qual o peso do paciente (em kg)?\n");
           scanf("%f", &peso);
           if (peso < 1) {
-              printf("Peso inválido! O peso deve ser maior que 1 kg.\n");
+              printf("Peso invalido! O peso deve ser maior que 1 kg.\n");
           }
       } while (peso < 1);
 
@@ -55,7 +55,7 @@ void calcularDoseMedicamento() {
       if (sinto == 'S' || sinto == 's') { 
           
         // Seleção do medicamento
-        printf("Escolha uma medicação para calcular \n");
+        printf("Escolha uma medicacao para calcular \n");
         printf(" 1 - Paracetamol \n 2 - Ibuprofeno \n 3 - Amoxicilina \n 4 - Dipirona \n 5 - Metformina \n 6 - Prednisona \n 7 - Salbutamol \n 8 - Omeprazol \n 9 - Loratadina \n 10 - Dexametasona\n");
         scanf("%d", &medic);
 		
@@ -99,7 +99,7 @@ void calcularDoseMedicamento() {
                 break;
 
             case 5: // Metformina
-                if (idade >= 10) { // Idade em anos
+                if (idade >= 120) { // 120 meses = 10 anos
                     dose = (peso * 12.5) / 2;
                     printf("\nCalculo para Metformina:\n");
                     printf("A dose de exemplo e de aproximadamente %.2f mg por dose.\n", dose);

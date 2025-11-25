@@ -1,4 +1,4 @@
-/*
+﻿/*
 ================================================================================
 PROJETO: Sistema de Gerenciamento de Clinica
 DISCIPLINA: Algoritmos e Programacao I
@@ -14,6 +14,9 @@ Responsavel por exibir opcoes e chamar as funcoes de estoque e dosagem.
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#ifdef _WIN32
+    #include <windows.h>  // Para SetConsoleOutputCP e SetConsoleCP
+#endif
 #include "../include/estoque.hpp"
 #include "../include/dosagem.hpp"
 
@@ -54,10 +57,10 @@ void mostrarMenuPrincipal() {
     printf("|   1 - Cadastrar Medicamento                          |\n");
     printf("|   2 - Listar Medicamentos                            |\n");
     printf("|   3 - Emitir Alertas de Estoque                      |\n");
-    printf("|   4 - Mostrar Estatísticas                          |\n");
+    printf("|   4 - Mostrar Estatisticas                          |\n");
     printf("|   5 - Simular Venda                                  |\n");
-    printf("|   6 - Exportar Inventário                           |\n");
-    printf("|   7 - Importar Inventário                           |\n");
+    printf("|   6 - Exportar Inventario                           |\n");
+    printf("|   7 - Importar Inventario                           |\n");
     printf("|   8 - Calcular Dosagem de Medicamento               |\n");
     printf("|                                                      |\n");
     printf("|   0 - Sair do Sistema                                |\n");
@@ -77,7 +80,7 @@ int lerOpcao() {
         if (resultado == 1) {
             return opcao;
         }
-        printf("\n  Entrada inválida! Digite um número: ");
+        printf("\n  Entrada invalida! Digite um numero: ");
     }
 }
 
@@ -96,8 +99,13 @@ void mostrarTituloOpcao(const char* titulo) {
 int main() {
     // Configuracao para aceitar acentos (á, é, í, ó, ú, ã, õ, ç)
     setlocale(LC_ALL, "Portuguese");
+    
     #ifdef _WIN32
+        // Configura console do Windows para UTF-8 (entrada e saida)
         system("chcp 65001 > nul");
+        // Configura modo de saida do console para UTF-8
+        SetConsoleOutputCP(65001);
+        SetConsoleCP(65001);
     #endif
     
     // Declaracao de variaveis
@@ -169,14 +177,14 @@ int main() {
             case 0:
                 mostrarTituloOpcao("ENCERRANDO SISTEMA");
                 printf("  Obrigado por usar o Sistema de Clinica!\n");
-                printf("  Até a próxima!\n");
+                printf("  Ate a proxima!\n");
                 printf("\n");
                 continuar = 0;  // Para o loop
                 break;
                 
             default:
                 mostrarTituloOpcao("ERRO - OPCAO INVALIDA");
-                printf("  Por favor, escolha uma opção entre 0 e 8.\n");
+                printf("  Por favor, escolha uma opcao entre 0 e 8.\n");
                 pausar();
                 break;
         }

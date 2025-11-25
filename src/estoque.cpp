@@ -1,8 +1,11 @@
-#include <iostream>
+﻿#include <iostream>
 #include <cstring>
 #include <stdio.h>
 #include "../include/estoque.hpp"
 #include "../include/utils.hpp"
+#ifdef _WIN32
+    #include <windows.h>  // Para SetConsoleOutputCP e SetConsoleCP
+#endif
 
 void cadastrarMedicamento(Medicamento lista[], int *total) {
     // Puxar informações do CSV para lista (se necessário)
@@ -19,7 +22,7 @@ void cadastrarMedicamento(Medicamento lista[], int *total) {
         printf("\nDigite o nome do medicamento: ");
         fgets(lista[*total].nome, sizeof(lista[*total].nome), stdin);
         if (strlen(lista[*total].nome) <= 1) {
-            printf("\nNome inválido. Por favor, tente novamente.");
+            printf("\nNome invalido. Por favor, tente novamente.");
         }
     } while (strlen(lista[*total].nome) <= 1); // Garante que o nome não seja vazio
     
@@ -38,11 +41,11 @@ void cadastrarMedicamento(Medicamento lista[], int *total) {
  
     // Quantidade mínima do medicamento
     do {
-        printf("\nDigite a quantidade mínima do medicamento: ");
+        printf("\nDigite a quantidade minima do medicamento: ");
         scanf("%d", &lista[*total].quantidadeMinima);
         limparBuffer();
         if (lista[*total].quantidadeMinima < 0) {
-            printf("\nQuantidade mínima inválida. Por favor, tente novamente.");
+            printf("\nQuantidade minima invalida. Por favor, tente novamente.");
         }
     } while (lista[*total].quantidadeMinima < 0); // Garante que a quantidade mínima não seja negativa
 
@@ -55,7 +58,7 @@ void cadastrarMedicamento(Medicamento lista[], int *total) {
     if (lista[*total].dia < 1 || lista[*total].dia > 31 || 
         lista[*total].mes < 1 || lista[*total].mes > 12 || 
         lista[*total].ano < 2024) {
-        printf("\n*** ERRO: Data inválida! ***");
+        printf("\n*** ERRO: Data invalida! ***");
         printf("\n    - Dia deve estar entre 01 e 31");
         printf("\n    - Mês deve estar entre 01 e 12");
         printf("\n    - Ano deve ser maior ou igual a 2024");
@@ -88,7 +91,7 @@ void listarMedicamentos(Medicamento lista[], int total) {
         printf("\nID: %d\n", lista[i].id);
         printf("Nome: %s\n", lista[i].nome);
         printf("Quantidade: %d\n", lista[i].quantidade);
-        printf("Quantidade Mínima: %d\n", lista[i].quantidadeMinima);
+        printf("Quantidade Minima: %d\n", lista[i].quantidadeMinima);
         printf("Data de Validade: %02d/%02d/%04d\n", lista[i].dia, lista[i].mes, lista[i].ano);
     }
     printf("\nFim da listagem de medicamentos!\n");
@@ -110,7 +113,7 @@ void emitirAlertas(Medicamento lista[], int total) {
 
     // Verifica e exibe os medicamentos com estoque abaixo do mínimo
     printf("\n========================================\n");
-    printf("\nAlertas de Medicamentos com Estoque Abaixo do Mínimo:\n");
+    printf("\nAlertas de Medicamentos com Estoque Abaixo do Minimo:\n");
     
     bool encontrouAlerta = false;
     for (int i = 0; i < total; i++) {
@@ -118,7 +121,7 @@ void emitirAlertas(Medicamento lista[], int total) {
             printf("\nID: %d\n", lista[i].id);
             printf("Nome: %s\n", lista[i].nome);
             printf("Quantidade: %d\n", lista[i].quantidade);
-            printf("Quantidade Mínima: %d\n", lista[i].quantidadeMinima);
+            printf("Quantidade Minima: %d\n", lista[i].quantidadeMinima);
             printf("Data de Validade: %02d/%02d/%04d\n", lista[i].dia, lista[i].mes, lista[i].ano);
             encontrouAlerta = true;
         }
@@ -137,7 +140,7 @@ void emitirAlertas(Medicamento lista[], int total) {
             printf("\nID: %d\n", lista[i].id);
             printf("Nome: %s\n", lista[i].nome);
             printf("Quantidade: %d\n", lista[i].quantidade);
-            printf("Quantidade Mínima: %d\n", lista[i].quantidadeMinima);
+            printf("Quantidade Minima: %d\n", lista[i].quantidadeMinima);
             printf("Data de Validade: %02d/%02d/%04d\n", lista[i].dia, lista[i].mes, lista[i].ano);
             encontrouAlerta = true;
         }
@@ -158,7 +161,7 @@ void emitirAlertas(Medicamento lista[], int total) {
             printf("\nID: %d\n", lista[i].id);
             printf("Nome: %s\n", lista[i].nome);
             printf("Quantidade: %d\n", lista[i].quantidade);
-            printf("Quantidade Mínima: %d\n", lista[i].quantidadeMinima);
+            printf("Quantidade Minima: %d\n", lista[i].quantidadeMinima);
             printf("Data de Validade: %02d/%02d/%04d\n", lista[i].dia, lista[i].mes, lista[i].ano);
             encontrouAlerta = true;
         }
@@ -217,7 +220,7 @@ void mostrarEstatisticas(Medicamento lista[], int total) {
     printf("\nTotal de medicamentos cadastrados: %d\n", total);
     printf("Quantidade total em estoque: %d\n", somaEstoque);
     printf("Quantidade média em estoque: %.2f\n", mediaEstoque);
-    printf("Medicamentos abaixo do estoque mínimo: %d\n", medicamentosAbaixoMinimo);
+    printf("Medicamentos abaixo do estoque minimo: %d\n", medicamentosAbaixoMinimo);
     printf("Medicamento com maior estoque: %s (Quantidade: %d)\n", lista[indiceMaior].nome, maiorEstoque);
     printf("Medicamento com menor estoque: %s (Quantidade: %d)\n", lista[indiceMenor].nome, menorEstoque);
     printf("\n========================================\n");
@@ -256,7 +259,7 @@ void simularVenda(Medicamento lista[], int total) {
         scanf("%d", &quantidadeVenda);
         limparBuffer();
         if (quantidadeVenda < 1 || quantidadeVenda > lista[indiceVenda].quantidade) {
-            printf("\nQuantidade inválida. Por favor, tente novamente.");
+            printf("\nQuantidade invalida. Por favor, tente novamente.");
         }
     } while (quantidadeVenda < 1 || quantidadeVenda > lista[indiceVenda].quantidade); 
     // Garante que a quantidade seja positiva e não exceda o estoque
@@ -283,7 +286,7 @@ void exportarInventario(Medicamento lista[], int total) {
     
     // Verifica se o arquivo foi aberto corretamente
     if (arquivo == NULL) {
-        printf("\nErro ao criar o arquivo de inventário.\n");
+        printf("\nErro ao criar o arquivo de inventario.\n");
         return;
     }
 
@@ -314,7 +317,7 @@ void importarInventario(Medicamento lista[], int *total) {
     FILE *arquivo = fopen("inventario_medicamentos.csv", "r");
     if (arquivo == NULL) {
         // Arquivo não existe, nada a carregar
-        printf("\nNenhum inventário encontrado para carregar.\n");
+        printf("\nNenhum inventario encontrado para carregar.\n");
         return;
     }
 
