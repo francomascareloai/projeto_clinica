@@ -1,4 +1,17 @@
-﻿#include <stdio.h>
+﻿/*
+================================================================================
+PROJETO: Sistema de Gerenciamento de Clinica
+DISCIPLINA: Algoritmos e Programacao I
+ALUNOS: Eduardo Luiz Wittmann, Nicolas Bizinotto Lacerda, Franco Mascarelo Ortiz
+PROFESSORA: Me Neiva Larisane Kuyven
+DATA: Novembro/2025
+
+Este arquivo contem as funcoes de dosagem de medicamentos: calculo de dose baseado 
+em idade, peso, genero e sintomas.
+================================================================================
+*/
+
+#include <stdio.h>
 #include <math.h> 
 #include <ctype.h>
 
@@ -8,9 +21,9 @@ void calcularDoseMedicamento() {
     char genero, sinto, repetir;
     
   printf("\n=========================================\n");
-  printf("\nBem-vindo à Calculadora de Dosagem de Medicamentos!\n");
+    printf("\nBem-vindo a Calculadora de Dosagem de Medicamentos!\n");
    
-  // Loop principal para permitir múltiplos cálculos
+    // Loop principal para permitir multiplos calculos
   do {
       // Entrada de dados do paciente
       do { // Idade em meses
@@ -21,15 +34,15 @@ void calcularDoseMedicamento() {
           }
       } while (idade < 0 || idade > 1440);
 
-      do { // Gênero do paciente
+    do { // Genero do paciente
           printf("\nQual o genero do paciente (M/F)?\n");
           scanf(" %c", &genero);
           genero = toupper(genero);
 
           if (genero == 'M') {
-              printf("Gênero: Masculino\n");
+              printf("Genero: Masculino\n");
           } else if (genero == 'F') {
-              printf("Gênero: Feminino\n");
+              printf("Genero: Feminino\n");
           } else {
               printf("Opcao invalida!!\n");
           }
@@ -51,10 +64,10 @@ void calcularDoseMedicamento() {
           }
       } while (peso < 1);
 
-      // Cálculo da dosagem caso o paciente apresente sintomas
+    // Calculo da dosagem caso o paciente apresente sintomas
       if (sinto == 'S' || sinto == 's') { 
           
-        // Seleção do medicamento
+        // Selecao do medicamento
         printf("Escolha uma medicacao para calcular \n");
         printf(" 1 - Paracetamol \n 2 - Ibuprofeno \n 3 - Amoxicilina \n 4 - Dipirona \n 5 - Metformina \n 6 - Prednisona \n 7 - Salbutamol \n 8 - Omeprazol \n 9 - Loratadina \n 10 - Dexametasona\n");
         scanf("%d", &medic);
@@ -150,16 +163,16 @@ void calcularDoseMedicamento() {
                 printf("Posologia: A dose diaria pode ser dividida. Uso estrito sob indicacao medica.\n");
                 break;
 
-            default: // Opção inválida
+            default: // Opcao invalida
                 printf("\nOpcao de medicamento invalida!\n");
                 break;
         }
       } else {
-          // Caso o paciente não apresente sintomas
+          // Caso o paciente nao apresente sintomas
           printf("\nComo o paciente nao apresenta sintomas, nenhuma dosagem sera indicada.\n");
       }
 	
-	  // Pergunta se o usuário deseja repetir o cálculo
+    // Pergunta se o usuario deseja repetir o calculo
     printf("\nDeseja calcular a dose para outro paciente? (S/N)\n");
     scanf(" %c", &repetir);
 

@@ -15,8 +15,9 @@ Abra o programa Dev-C++
 1. Clique em: **File > New > Project**
 
 2. Vai aparecer uma janela. Escolha:
+
    - **Console Application** (clique nele)
-   - **C Project** (NÃO escolha C++!)
+   - **C++ Project**
    - Nome: `clinica`
    - Clique em **OK**
 
@@ -31,6 +32,7 @@ Abra o programa Dev-C++
 1. No Dev-C++, clique em: **Project > Add To Project...**
 
 2. Navegue ate a pasta `src` e selecione ESTES 3 arquivos:
+
    - ✅ `main.c`
    - ✅ `estoque.cpp`
    - ✅ `utils.cpp`
@@ -45,11 +47,12 @@ Abra o programa Dev-C++
 
 2. Clique na aba **Directories**
 
-3. Clique em **C Includes** (na lista da esquerda)
+3. Clique em **C++ Includes** (na lista da esquerda)
 
 4. Clique no botão com icone de pasta (lado direito)
 
 5. Navegue ate e adicione:
+
    ```
    C:\Users\Admin\Documents\Uniftec\Algoritmos e Programacao\projeto_clinica\include
    ```
@@ -69,12 +72,15 @@ Pressione **F11** ou clique em **Execute > Compile & Run**
 ## ⚠️ SE DER ERRO
 
 ### Erro de "include not found":
+
 - Verifique se configurou a pasta include (Passo 4)
 
 ### Erro de acentos nos comentarios:
+
 - **JA RESOLVIDO!** O main.c nao tem mais acentos
 
 ### Erro de "undefined reference":
+
 - Certifique-se que adicionou OS 3 arquivos (main.c, estoque.cpp, utils.cpp)
 
 ---

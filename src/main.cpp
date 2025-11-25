@@ -19,85 +19,14 @@ Responsavel por exibir opcoes e chamar as funcoes de estoque e dosagem.
 #endif
 #include "../include/estoque.hpp"
 #include "../include/dosagem.hpp"
-
-// ===========================================
-// FUNCOES DE INTERFACE
-// ===========================================
-
-// Limpa a tela do console
-void limparTela() {
-    #ifdef _WIN32
-        system("cls");
-    #endif
-}
-
-// Aguarda o usuario pressionar ENTER
-void pausar() {
-    printf("\nPressione ENTER para continuar...");
-    getchar();
-}
-
-// Exibe o cabecalho do sistema
-void mostrarCabecalho() {
-    printf("========================================================\n");
-    printf("                                                        \n");
-    printf("         SISTEMA DE GERENCIAMENTO DE CLINICA            \n");
-    printf("         Controle de Estoque de Medicamentos            \n");
-    printf("                                                        \n");
-    printf("========================================================\n");
-    printf("\n");
-}
-
-// Exibe o menu com todas as opcoes
-void mostrarMenuPrincipal() {
-    printf("+------------------------------------------------------+\n");
-    printf("|                  MENU PRINCIPAL                      |\n");
-    printf("+------------------------------------------------------+\n");
-    printf("|                                                      |\n");
-    printf("|   1 - Cadastrar Medicamento                          |\n");
-    printf("|   2 - Listar Medicamentos                            |\n");
-    printf("|   3 - Emitir Alertas de Estoque                      |\n");
-    printf("|   4 - Mostrar Estatisticas                          |\n");
-    printf("|   5 - Simular Venda                                  |\n");
-    printf("|   6 - Exportar Inventario                           |\n");
-    printf("|   7 - Importar Inventario                           |\n");
-    printf("|   8 - Calcular Dosagem de Medicamento               |\n");
-    printf("|                                                      |\n");
-    printf("|   0 - Sair do Sistema                                |\n");
-    printf("|                                                      |\n");
-    printf("+------------------------------------------------------+\n");
-    printf("\n  Digite sua opcao: ");
-}
-
-// Le a opcao do menu e valida se e um numero
-int lerOpcao() {
-    int opcao, resultado;
-    
-    while (1) {
-        resultado = scanf("%d", &opcao);
-        while (getchar() != '\n');  // Limpa o buffer
-        
-        if (resultado == 1) {
-            return opcao;
-        }
-        printf("\n  Entrada invalida! Digite um numero: ");
-    }
-}
-
-// Exibe um titulo formatado
-void mostrarTituloOpcao(const char* titulo) {
-    printf("========================================================\n");
-    printf("  %s\n", titulo);
-    printf("========================================================\n");
-    printf("\n");
-}
+#include "../include/utils.hpp"
 
 // ===========================================
 // FUNCAO PRINCIPAL
 // ===========================================
 
 int main() {
-    // Configuracao para aceitar acentos (á, é, í, ó, ú, ã, õ, ç)
+    // Configuracao para aceitar acentos (a, e, i, o, u, a, o, c)
     setlocale(LC_ALL, "Portuguese");
     
     #ifdef _WIN32

@@ -5,10 +5,16 @@
 
 void limparBuffer();
 void vazioPorEnquanto(Medicamento lista[], int total);
+void limparTela();
+void pausar();
+void mostrarCabecalho();
+void mostrarMenuPrincipal();
+int lerOpcao();
+void mostrarTituloOpcao(const char* titulo);
 
 #endif
 
-// Criar diretório portable (Windows / POSIX)
+// Criar diretorio portable (Windows / POSIX)
 #ifdef _WIN32
 # include <direct.h>
 # define MKDIR(path) _mkdir(path)
